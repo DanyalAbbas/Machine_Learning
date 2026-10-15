@@ -1,0 +1,49 @@
+[{"stream_name":"stderr","time":8.876854082,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.876904544,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.87691163,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.876915775,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.64405618,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.644095052,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.644101358,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.644106364,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":14.262832599,"data":"[     0s] data dir /kaggle/input/competitions/name-that-llm\n"}
+,{"stream_name":"stdout","time":14.263845879,"data":"[     0s] train (2699, 4) (150 prompts) | test (3, 2)\n"}
+,{"stream_name":"stdout","time":81.920869969,"data":"[    68s] fold 1/5: 2159 train rows / 540 val rows -\u003e bal_acc 0.3685\n"}
+,{"stream_name":"stdout","time":147.301531995,"data":"[   133s] fold 2/5: 2159 train rows / 540 val rows -\u003e bal_acc 0.3704\n"}
+,{"stream_name":"stdout","time":210.645852641,"data":"[   197s] fold 3/5: 2159 train rows / 540 val rows -\u003e bal_acc 0.3852\n"}
+,{"stream_name":"stdout","time":264.218271168,"data":"[   250s] fold 4/5: 2159 train rows / 540 val rows -\u003e bal_acc 0.3870\n"}
+,{"stream_name":"stdout","time":327.94357468,"data":"[   314s] fold 5/5: 2160 train rows / 539 val rows -\u003e bal_acc 0.3743\n"}
+,{"stream_name":"stdout","time":327.952008693,"data":"[   314s] OOF balanced accuracy: 0.3771 +/- 0.0076\n"}
+,{"stream_name":"stdout","time":327.962027555,"data":"[   314s] weakest classes:\n"}
+,{"stream_name":"stdout","time":327.962091103,"data":"claude-fable-5     0.081\n"}
+,{"stream_name":"stdout","time":327.962098581,"data":"gpt-5.6-sol        0.100\n"}
+,{"stream_name":"stdout","time":327.962104518,"data":"glm-5.3            0.173\n"}
+,{"stream_name":"stdout","time":327.962109552,"data":"glm-5.3-flash      0.233\n"}
+,{"stream_name":"stdout","time":327.962114445,"data":"gpt-5.6-terra      0.247\n"}
+,{"stream_name":"stdout","time":327.96211925,"data":"claude-opus-4-8    0.280\n"}
+,{"stream_name":"stdout","time":327.962124141,"data":"kimi-k3            0.280\n"}
+,{"stream_name":"stdout","time":327.962130738,"data":"gpt-5.6-luna       0.307\n"}
+,{"stream_name":"stdout","time":327.96348807,"data":"[   314s] provider-family accuracy: 0.6943\n"}
+,{"stream_name":"stdout","time":392.238613981,"data":"[   378s] fold model 1/5 fitted and scored on test\n"}
+,{"stream_name":"stdout","time":456.348451912,"data":"[   442s] fold model 2/5 fitted and scored on test\n"}
+,{"stream_name":"stdout","time":515.915615378,"data":"[   502s] fold model 3/5 fitted and scored on test\n"}
+,{"stream_name":"stdout","time":568.088719608,"data":"[   554s] fold model 4/5 fitted and scored on test\n"}
+,{"stream_name":"stdout","time":628.539630372,"data":"[   615s] fold model 5/5 fitted and scored on test\n"}
+,{"stream_name":"stdout","time":628.775560284,"data":"[   615s] wrote 3 rows to /kaggle/working/submission.parquet\n"}
+,{"stream_name":"stdout","time":628.783910563,"data":"          id                  model\n"}
+,{"stream_name":"stdout","time":628.783970828,"data":"00353fb1c541       gemini-3.6-flash\n"}
+,{"stream_name":"stdout","time":628.783997824,"data":"005f5a9a6139          gpt-5.6-terra\n"}
+,{"stream_name":"stdout","time":628.784002872,"data":"0062a53d5487 gemini-3.1-pro-preview\n"}
+,{"stream_name":"stdout","time":628.784007743,"data":"model\n"}
+,{"stream_name":"stdout","time":628.784011937,"data":"gemini-3.6-flash          1\n"}
+,{"stream_name":"stdout","time":628.784015835,"data":"gpt-5.6-terra             1\n"}
+,{"stream_name":"stdout","time":628.784019781,"data":"gemini-3.1-pro-preview    1\n"}
+,{"stream_name":"stderr","time":632.373860866,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":632.373925394,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":632.571529233,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":632.571570226,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":633.549700935,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":633.646398872,"data":"[NbConvertApp] Writing 19478 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":636.867152092,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":637.558625969,"data":"[NbConvertApp] Writing 332817 bytes to __results__.html\n"}
+]

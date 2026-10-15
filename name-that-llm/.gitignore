@@ -1,0 +1,3 @@
+# competition data is re-downloadable from Kaggle, not versioned here
+/data/
+__pycache__/
