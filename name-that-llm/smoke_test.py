@@ -1,47 +1,76 @@
-"""Smoke-test baseline_v1_stylometry.py without waiting for the full 5-fold run locally.
+"""Smoke-test a notebook source locally without a GPU.
 
-Shrinks only the expensive knobs (fold count, char-ngram vocabulary). All the logic —
-feature union, label alignment, fold ensemble, submission validation, parquet round trip
-— runs exactly as written.
+Runs the real source with fewer folds and a smaller vocabulary so the whole path -
+feature union, clustering, branch plumbing, blend search, cluster assignment and the
+submission write/read-back - executes on a laptop. The submission is built through the
+tiny interactive test.csv, which is exactly the path a Kaggle rerun takes.
+
+The embedding branch is stubbed via NTL_NO_QWEN=1 and is verified on GPU in Kaggle.
+
+Usage:
+    python3 smoke_test.py v2_qwen_clusters.py
+    python3 smoke_test.py v15_clusters_cpu.py
+
+Run from the repository root - the notebook sources locate data/ relative to the
+working directory, so `data/` must be visible from where you launch this.
 """
 
+from __future__ import annotations
+
+import json
+import os
 import sys
 import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SRC = HERE / "baseline_v1_stylometry.py"
 
+# Only the expensive knobs shrink. All logic is untouched.
 OVERRIDES = {
     "N_FOLDS = 5": "N_FOLDS = 2",
-    "CHAR_MAX_FEATURES = 300_000": "CHAR_MAX_FEATURES = 40_000",
-    "CHAR_NGRAM = (1, 5)": "CHAR_NGRAM = (1, 3)",
+    "max_features=300_000": "max_features=40_000",
+    'ngram_range=(1, 5), sublinear_tf=True,\n                                 lowercase=False':
+        'ngram_range=(1, 3), sublinear_tf=True,\n                                 lowercase=False',
 }
 
 
 def main() -> int:
-    code = SRC.read_text()
+    src = HERE / (sys.argv[1] if len(sys.argv) > 1 else "v2_qwen_clusters.py")
+    if not src.is_file():
+        print(f"no such source: {src}")
+        return 1
+    code = src.read_text()
+    applied = 0
     for old, new in OVERRIDES.items():
-        assert old in code, f"override target missing from source: {old}"
-        code = code.replace(old, new)
+        if old in code:
+            code = code.replace(old, new)
+            applied += 1
+    print(f"smoke-testing {src.name} ({applied} overrides applied)")
 
     with tempfile.TemporaryDirectory() as tmp:
         code = code.replace(
             'OUT = Path("/kaggle/working") if Path("/kaggle/working").exists() else Path(".")',
             f'OUT = Path(r"{tmp}")',
         )
-        exec(compile(code, str(SRC), "exec"), {"__name__": "__main__"})
+        os.environ["NTL_NO_QWEN"] = "1"          # stub the GPU embedding branch
+        exec(compile(code, str(src), "exec"), {"__name__": "__main__"})
 
-        sub = Path(tmp) / "submission.parquet"
-        assert sub.is_file(), "submission.parquet not written"
-        print("\nSMOKE TEST OK ->", sub)
-
+        import numpy as np
         import pandas as pd
 
-        out = pd.read_parquet(sub)
-        print(out.to_string(index=False))
-        assert list(out.columns) == ["id", "model"]
-        assert not out.isna().any().any() and out.id.is_unique
+        sub = pd.read_parquet(Path(tmp) / "submission.parquet")
+        print("\nSMOKE TEST OK")
+        print(sub.to_string(index=False))
+        assert list(sub.columns) == ["id", "model"]
+        assert len(sub) == 3 and sub.id.is_unique and not sub.isna().any().any()
+
+        for name in sorted(p.name for p in Path(tmp).iterdir()):
+            print("  artefact:", name)
+        summary = Path(tmp) / "cv_summary.json"
+        if summary.exists():
+            print("cv_summary:", json.dumps(json.loads(summary.read_text()), indent=2))
+        for probe in Path(tmp).glob("*.npz"):
+            print(f"{probe.name} keys:", list(np.load(probe, allow_pickle=False).keys()))
     return 0
 
 
